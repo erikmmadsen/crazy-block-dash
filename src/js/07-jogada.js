@@ -85,7 +85,7 @@ async function placePiece(i,r,c){
  busy=false;
  if(mode==='level')await levelAfterMove(g,lines);
  else if(!pieces.some(x=>!x.used&&findAny(x)))await gameOver(g);else saveGame();
- }catch(e){if(e!=='cancelado')throw e}
+ }catch(e){if(e!=='cancelado'){if(g===gen)busy=false;throw e}} // erro inesperado: libera as peças em vez de travar o jogo
 }
 function celebrate(n){
  const el=$('#party');clearTimeout(partyTimer);

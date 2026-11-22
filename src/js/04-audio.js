@@ -42,6 +42,7 @@ async function loadSound(k){
 }
 function play(k,rate=1){
  if(muted||!actx||!sounds[k])return;
+ try{ // um erro de som nunca pode travar a jogada
  if(actx.state==='suspended')actx.resume();
  const s=sounds[k],vol=SFX[k].vol;
  if(s.buf){
@@ -50,9 +51,10 @@ function play(k,rate=1){
   // envelope: entrada rápida e saída suave no final do som (nada corta seco)
   const t=actx.currentTime,len=Math.min((s.buf.duration-s.start)/rate,SFX[k].max||99),v=vol*s.norm,fade=SFX[k].fade??.35;
   g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+.006);
-  g.gain.setValueAtTime(v,t+len*(1-fade));g.gain.linearRampToValueAtTime(0,t+len);src.stop(t+len+.05);
-  src.connect(g).connect(master);src.start(t,s.start);
+  g.gain.setValueAtTime(v,t+len*(1-fade));g.gain.linearRampToValueAtTime(0,t+len);
+  src.connect(g).connect(master);src.start(t,s.start);src.stop(t+len+.05); // stop() só depois do start(), senão o navegador dá erro
  }else{const a=s.el.cloneNode();a.volume=Math.min(1,vol*EFEITOS_VOL);a.playbackRate=rate;a.play().catch(()=>{});if(SFX[k].max)setTimeout(()=>a.pause(),SFX[k].max*1000/rate)}
+ }catch(e){console.warn('som',k,e)}
 }
 /* ===== MÚSICA DE FUNDO (gerada no Higgsfield) ===== */
 const MUSICA={file:'musica_1.mp3',vol:.3}; // vol = volume da música (0 a 1); fica mais baixa que os efeitos
