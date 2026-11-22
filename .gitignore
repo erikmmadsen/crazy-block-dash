@@ -17,9 +17,5 @@ keystore.properties
 .vscode/
 *.log
 
-# imagens originais e rascunhos (não vão para o jogo)
-Garoto Neon de Olhos Verdes.png
-Retrato Gótico com Cão Yorkshire Adorável.png
-comemoracao (opcoes)/
-bloco.jpeg
-blocos.jpeg
+# arquivos locais: fotos originais, opções de personagens, rascunhos (não vão para o GitHub)
+_local/

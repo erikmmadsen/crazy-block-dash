@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#101329">
+<title>Crazy Block Dash</title>
+<meta name="description" content="Crazy Block Dash: encaixe blocos, limpe linhas e faça combos com peças especiais malucas. Jogue grátis no navegador!">
+<link rel="icon" type="image/png" href="images/icone.png">
+<link rel="apple-touch-icon" href="images/icone.png">
+<link rel="stylesheet" href="css/jogo.css">
+<link rel="stylesheet" href="css/telas.css">
+<link rel="stylesheet" href="css/animacoes.css">
+</head>
+<body>
+<main id="game">
+<div class="top"><button class="icon" id="pauseBtn" data-ia="pauseAria" aria-label="Pausar">⏸</button><div class="stat"><small data-i="points">PONTOS</small><span id="score">0</span><b id="multBadge" hidden>x2</b></div><div class="stat"><small data-i="best">RECORDE</small><span id="best">0</span></div></div>
+<div id="goalBar" hidden><div class="gfill" id="goalFill"></div><span id="goalTxt"></span><span id="goalMoves"></span></div>
+<div id="board" data-ia="boardAria" aria-label="Tabuleiro 10 por 10"></div>
+<div class="hint" data-i="hint">Arraste uma peça para o tabuleiro</div>
+<div class="tray" id="tray"></div>
+<div id="message"></div>
+</main><div id="ghost"></div>
+<div id="shout" aria-hidden="true"></div>
+<div id="party" aria-hidden="true"><div class="pal l" style="background-image:url(images/garoto.webp)"></div><div class="mult" id="partyMult">X1</div><div class="pal r" style="background-image:url(images/garota.webp)"></div></div>
+
+<!-- MENU PRINCIPAL -->
+<section id="menu" class="screen solid show">
+ <div class="logo" id="logo"></div>
+ <h1>CRAZY<br>BLOCK DASH</h1>
+ <div class="record"><span data-i="menuBest">🏆 Recorde:</span> <b id="menuBest">0</b></div>
+ <div class="stack">
+  <button class="btn primary" id="playBtn">▶ JOGAR</button>
+  <button class="btn" id="newBtn" data-i="newGame" hidden>↻ Novo jogo</button>
+  <button class="btn levels" id="levelsBtn" data-i="levelsBtn">🗺️ Fases</button>
+  <button class="btn rank" data-rank data-i="rankBtn">🏆 Placar mundial</button>
+  <button class="btn" data-go="howto" data-i="howtoBtn">❓ Como jogar</button>
+  <button class="btn" id="langBtn" data-i="langBtn">🌐 Idiomas</button>
+  <div class="toggles"><button class="btn small" data-toggle="music"></button><button class="btn small" data-toggle="sfx"></button></div>
+ </div>
+ <div class="ver"><span id="ver">v1.0.0</span> · <span data-i="devBy">Desenvolvido por</span> Erik Moreira Madsen</div>
+</section>
+
+<!-- PAUSA -->
+<section id="pause" class="screen dim">
+ <div class="card">
+  <h2 data-i="paused">PAUSADO</h2>
+  <div class="stack">
+   <button class="btn primary" id="resumeBtn" data-i="resume">▶ Continuar</button>
+   <button class="btn" id="restartBtn" data-i="restart">↻ Reiniciar</button>
+   <button class="btn" data-go="howto" data-i="howtoBtn">❓ Como jogar</button>
+   <div class="toggles"><button class="btn small" data-toggle="music"></button><button class="btn small" data-toggle="sfx"></button></div>
+   <button class="btn link" id="pauseMenuBtn" data-i="mainMenu">⌂ Menu principal</button>
+  </div>
+ </div>
+</section>
+
+<!-- FIM DE JOGO -->
+<section id="over" class="screen dim">
+ <div class="card">
+  <h2 data-i="overTitle">FIM DE JOGO</h2>
+  <div class="newrec" id="newRec" data-i="newRecord" hidden>🏆 NOVO RECORDE!</div>
+  <div class="final"><div><small data-i="points">PONTOS</small><b id="overScore">0</b></div><div><small data-i="best">RECORDE</small><b id="overBest">0</b></div></div>
+  <div class="stack">
+   <button class="btn primary" id="againBtn" data-i="again">↻ Jogar de novo</button>
+   <button class="btn rank" data-rank data-i="rankBtn">🏆 Placar mundial</button>
+   <button class="btn link" id="overMenuBtn" data-i="mainMenu">⌂ Menu principal</button>
+  </div>
+ </div>
+</section>
+
+<!-- COMO JOGAR -->
+<section id="howto" class="screen solid">
+ <div class="card wide">
+  <h2 data-i="howtoTitle">COMO JOGAR</h2>
+  <ul class="rules">
+   <li data-i="r1"></li>
+   <li data-i="r2"></li>
+   <li data-i="r3"></li>
+   <li data-i="r4"></li>
+   <li data-i="r5"></li>
+   <li data-i="r6"></li>
+  </ul>
+  <h3 data-i="specialsTitle">Peças especiais</h3>
+  <div class="specials">
+   <div><span>💣</span><p data-i="sExp"></p></div>
+   <div><span>💧</span><p data-i="sMelt"></p></div>
+   <div><span>⏳</span><p data-i="sSand"></p></div>
+   <div><span>🧲</span><p data-i="sMag"></p></div>
+   <div><span>🧹</span><p data-i="sClear"></p></div>
+  </div>
+  <button class="btn primary" id="howtoBack" data-i="gotIt">Entendi!</button>
+ </div>
+</section>
+
+<!-- FASES: escolher a fase -->
+<section id="levels" class="screen solid">
+ <div class="card wide">
+  <h2 data-i="levelsTitle">FASES</h2>
+  <div class="lvgrid" id="lvGrid"></div>
+  <button class="btn link" id="levelsBack" data-i="back">← Voltar</button>
+ </div>
+</section>
+
+<!-- FASES: fim da fase (venceu ou perdeu) -->
+<section id="lvlEnd" class="screen dim">
+ <div class="card">
+  <h2 id="lvlEndTitle"></h2>
+  <div class="stars" id="lvlStars"></div>
+  <p class="lvwhy" id="lvlWhy"></p>
+  <div class="final"><div><small data-i="points">PONTOS</small><b id="lvlScore">0</b></div></div>
+  <div class="stack">
+   <button class="btn primary" id="lvlNext" data-i="nextLvl">▶ Próxima fase</button>
+   <button class="btn" id="lvlRetry" data-i="retry">↻ Tentar de novo</button>
+   <button class="btn link" id="lvlToList" data-i="levelsBtn">🗺️ Fases</button>
+  </div>
+ </div>
+</section>
+
+<!-- PLACAR MUNDIAL: aviso quando ainda não está disponível -->
+<section id="rank" class="screen solid">
+ <div class="card">
+  <h2 data-i="rankTitle">PLACAR MUNDIAL</h2>
+  <div class="rankicon">🏆</div>
+  <p class="lvwhy" id="rankMsg"></p>
+  <div class="record"><span data-i="rankBest">Seu recorde:</span> <b id="rankBest">0</b></div>
+  <button class="btn link" id="rankBack" data-i="back">← Voltar</button>
+ </div>
+</section>
+
+<!-- IDIOMAS -->
+<section id="lang" class="screen solid">
+ <div class="card">
+  <h2 data-i="langTitle">IDIOMAS</h2>
+  <div class="stack" id="langList"></div>
+  <button class="btn link" id="langBack" data-i="back">← Voltar</button>
+ </div>
+</section>
+<script src="js/01-idiomas.js"></script>
+<script src="js/02-config.js"></script>
+<script src="js/03-save.js"></script>
+<script src="js/04-audio.js"></script>
+<script src="js/05-tabuleiro.js"></script>
+<script src="js/06-efeitos.js"></script>
+<script src="js/07-jogada.js"></script>
+<script src="js/08-fases.js"></script>
+<script src="js/09-placar.js"></script>
+<script src="js/10-telas.js"></script>
+<script src="js/11-inicio.js"></script>
+</body></html>
