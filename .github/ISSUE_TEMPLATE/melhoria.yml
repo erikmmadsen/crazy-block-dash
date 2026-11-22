@@ -1,0 +1,26 @@
+name: Melhoria / novidade
+description: Pedir uma novidade ou mudança no jogo
+labels: [enhancement]
+body:
+  - type: textarea
+    id: pedido
+    attributes:
+      label: Pedido
+      description: O que deve mudar no jogo?
+    validations:
+      required: true
+  - type: textarea
+    id: tarefas
+    attributes:
+      label: O que precisa ser feito
+      description: Lista de tarefas (uma por linha, com "- [ ]")
+  - type: dropdown
+    id: versao
+    attributes:
+      label: Tipo de versão
+      options:
+        - MINOR (novidade)
+        - PATCH (ajuste pequeno)
+        - MAJOR (mudança grande)
+    validations:
+      required: true
