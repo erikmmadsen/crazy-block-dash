@@ -1,0 +1,23 @@
+{
+  "name": "crazy-block-dash",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.js",
+    "site": "node scripts/build.js --site",
+    "check": "node scripts/check.js",
+    "sync": "npm run build && npx cap sync android",
+    "open": "npx cap open android",
+    "aab": "npm run sync && cd android && gradlew.bat bundleRelease"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.6.2",
+    "@capacitor/app": "^8.1.2",
+    "@capacitor/core": "^8.6.2",
+    "@capacitor/preferences": "^8.0.1"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.6.2"
+  },
+  "description": "Crazy Block Dash: jogo de quebra-cabeça de blocos (web + Android via Capacitor)"
+}

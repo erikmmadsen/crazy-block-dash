@@ -1,0 +1,25 @@
+# dependências e builds (gerados automaticamente)
+node_modules/
+www/
+site/
+android/app/build/
+android/build/
+android/.gradle/
+
+# chave de assinatura da Play Store: NUNCA enviar
+assinatura/
+*.jks
+*.keystore
+keystore.properties
+
+# arquivos locais / do editor
+.idea/
+.vscode/
+*.log
+
+# imagens originais e rascunhos (não vão para o jogo)
+Garoto Neon de Olhos Verdes.png
+Retrato Gótico com Cão Yorkshire Adorável.png
+comemoracao (opcoes)/
+bloco.jpeg
+blocos.jpeg

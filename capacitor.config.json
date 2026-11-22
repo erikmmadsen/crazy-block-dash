@@ -1,0 +1,13 @@
+{
+  "appId": "com.temauraaqui.blocosmalucos",
+  "appName": "Crazy Block Dash",
+  "webDir": "www",
+  "android": {
+    "backgroundColor": "#101329"
+  },
+  "plugins": {
+    "SystemBars": {
+      "style": "DARK"
+    }
+  }
+}

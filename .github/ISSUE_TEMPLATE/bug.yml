@@ -1,0 +1,25 @@
+name: Bug
+description: Algo no jogo não está funcionando
+labels: [bug]
+body:
+  - type: textarea
+    id: problema
+    attributes:
+      label: O que aconteceu
+    validations:
+      required: true
+  - type: textarea
+    id: passos
+    attributes:
+      label: Como reproduzir
+      placeholder: "1. Abrir o jogo\n2. ..."
+  - type: dropdown
+    id: onde
+    attributes:
+      label: Onde
+      options:
+        - App Android
+        - Site (navegador)
+        - Os dois
+    validations:
+      required: true

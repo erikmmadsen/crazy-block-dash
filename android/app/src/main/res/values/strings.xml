@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Crazy Block Dash</string>
+    <string name="title_activity_main">Crazy Block Dash</string>
+    <string name="package_name">com.temauraaqui.blocosmalucos</string>
+    <string name="custom_url_scheme">com.temauraaqui.blocosmalucos</string>
+    <!-- PLACAR MUNDIAL (Google Play Games): troque pelos IDs do Play Console -->
+    <!-- ID do projeto: Play Console > Play Games Services > Configuração e gerenciamento > Configuração -->
+    <string name="game_services_project_id" translatable="false">000000000000</string>
+    <!-- ID do placar: Play Console > Play Games Services > Placares (algo como CgkI...EAIQAQ) -->
+    <string name="leaderboard_pontos" translatable="false">COLE_AQUI_O_ID_DO_PLACAR</string>
+</resources>
