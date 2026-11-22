@@ -7,6 +7,12 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e 
 - **MINOR** (1.1.0): novidade (modo novo, peça nova, tela nova)
 - **PATCH** (1.0.1): correção ou ajuste pequeno (texto, som, cor, bug)
 
+## [1.0.2] - 2026-11-22
+
+### Corrigido
+- Depois de encaixar a primeira peça, nenhuma outra podia ser arrastada: o som do encaixe dava erro (`stop()` chamado antes de `start()`) e a jogada ficava presa (#7)
+- Um erro de som não trava mais a jogada, e um erro inesperado durante a jogada libera as peças
+
 ## [1.0.1] - 2026-11-22
 
 ### Alterado
