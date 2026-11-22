@@ -11,10 +11,10 @@ Quebra-cabeça de blocos colorido e cheio de surpresas. Arraste as peças para o
 Desenvolvido por **Erik Moreira Madsen**.
 
 <p align="center">
-  <img src="play-store/print-1-menu.png" width="200" alt="Menu">
-  <img src="play-store/print-2-jogo.png" width="200" alt="Partida">
-  <img src="play-store/print-3-especiais.png" width="200" alt="Peças especiais">
-  <img src="play-store/print-4-recorde.png" width="200" alt="Recorde">
+  <img src="play-store/imagens/prints/print-1-menu.png" width="200" alt="Menu">
+  <img src="play-store/imagens/prints/print-2-jogo.png" width="200" alt="Partida">
+  <img src="play-store/imagens/prints/print-3-especiais.png" width="200" alt="Peças especiais">
+  <img src="play-store/imagens/prints/print-4-recorde.png" width="200" alt="Recorde">
 </p>
 
 ## Como jogar
@@ -48,7 +48,7 @@ Desenvolvido por **Erik Moreira Madsen**.
 Idiomas: português (Brasil e Portugal), inglês, francês e espanhol.
 
 ## Tecnologia
-- O jogo inteiro é um único arquivo HTML, CSS e JavaScript: [`BlockBlastMaluco_v2.html`](BlockBlastMaluco_v2.html), sem frameworks.
+- O jogo é HTML, CSS e JavaScript puros, sem frameworks, dentro de [`src/`](src/).
 - **Android**: [Capacitor 8](https://capacitorjs.com/) (API 36), com plugin nativo próprio para o Google Play Games.
 - **Web**: GitHub Pages.
 - **Sons e personagens**: gerados com Higgsfield.
@@ -62,7 +62,7 @@ npm run site     # monta www/ e site/
 npm run check    # verificações automáticas
 ```
 
-Para jogar no navegador, abra `www/index.html`, ou sirva a pasta `site/` com qualquer servidor estático.
+Para jogar no navegador, abra `src/index.html` (ou `www/index.html`, já com a versão), ou sirva a pasta `site/` com qualquer servidor estático.
 
 **Android:**
 ```sh
@@ -72,13 +72,30 @@ npm run open     # abre no Android Studio (▶ para instalar no celular)
 
 ## Estrutura
 ```
-BlockBlastMaluco_v2.html   o jogo (fonte)
-sounds/  images/           sons e imagens
-android/                   projeto Android (Capacitor)
-play-store/                textos da loja, política de privacidade, artes
-scripts/                   build e verificações
-.github/                   CI/CD, modelos de issue e PR
-CHANGELOG.md               histórico de versões
+src/                          o jogo (tudo que vai para o site e para o app)
+├── index.html                telas e estrutura da página
+├── css/                      jogo.css · telas.css · animacoes.css
+├── js/                       rodam na ordem do número e compartilham as variáveis
+│   ├── 01-idiomas.js         textos nos 5 idiomas
+│   ├── 02-config.js          tabuleiro, cores, formatos de peça, peças especiais
+│   ├── 03-save.js            recorde, partida salva, preferências
+│   ├── 04-audio.js           sons e música
+│   ├── 05-tabuleiro.js       tabuleiro, bandeja, prévia e arrastar
+│   ├── 06-efeitos.js         locutor na tela, pontos animados
+│   ├── 07-jogada.js          jogada, especiais, combos, rubis, fim de jogo
+│   ├── 08-fases.js           modo Fases
+│   ├── 09-placar.js          placar mundial
+│   ├── 10-telas.js           telas e botões
+│   └── 11-inicio.js          início do jogo (sempre o último)
+├── sounds/                   só os sons em uso
+└── images/                   personagens e ícone
+recursos/sons-alternativos/   outras versões dos sons (não vão para o jogo)
+android/                      projeto Android (Capacitor)
+play-store/                   textos da loja, política de privacidade e imagens/ (ícone, destaque, prints)
+docs/                         guias (ex.: como ligar o placar mundial)
+scripts/                      build e verificações
+.github/                      CI/CD, modelos de issue e PR, CODEOWNERS
+CHANGELOG.md                  histórico de versões
 ```
 
 ## Versões e CI/CD
@@ -87,14 +104,15 @@ O jogo segue o [SemVer](https://semver.org/lang/pt-BR/). A versão fica no `pack
 | Quando | Workflow | O que faz |
 |---|---|---|
 | Pull Request para `main` | **CI** | monta o jogo; verifica JavaScript, sons, imagens, os 5 idiomas, se a versão subiu e o CHANGELOG; gera a prévia do site e o **APK de teste** |
-| Merge na `main` | **Deploy** | publica o site no GitHub Pages e cria a **Release `vX.Y.Z`** com o APK (e o `.aab` assinado, se os segredos estiverem configurados) |
+| Merge na `main` | **Deploy** | publica o site no GitHub Pages |
+| Versão mudou na `main` (`package.json`) | **Release** | cria a **Release `vX.Y.Z`** com o APK (e o `.aab` assinado, se os segredos estiverem configurados) e as notas do CHANGELOG |
 
 ### Fluxo de alterações
 1. Abrir uma **issue** com o pedido.
 2. Criar uma **branch** `feature/<nº>-<resumo>` ou `fix/<nº>-<resumo>`.
 3. Fazer a mudança, subir a versão (`npm version patch|minor --no-git-tag-version`) e atualizar o `CHANGELOG.md`.
 4. Abrir uma **Pull Request**. A `main` é protegida: precisa do CI passando e da aprovação do Erik.
-5. Depois do merge, o site e a Release são publicados automaticamente.
+5. Depois do merge, o site é atualizado e, como a versão mudou, a Release nova é criada automaticamente.
 
 ### Segredos opcionais (`.aab` assinado na Release)
 Em *Settings › Secrets and variables › Actions*:

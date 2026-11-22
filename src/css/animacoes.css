@@ -1,0 +1,67 @@
+/* Crazy Block Dash: animações dos blocos e modo rubi */
+/* ===== ANIMAÇÕES NOS BLOCOS (todas no ::after de cada casa, com atraso --d) ===== */
+.cell[class*="fx-"]::after{animation-delay:var(--d,0ms);animation-fill-mode:both}
+.cell.fx-fall,.cell.fx-explode,.cell.fx-land{z-index:2}
+
+/* peça encaixando: cai com leve achatamento */
+.fx-land::after{animation:land .34s cubic-bezier(.3,1.4,.5,1)}
+@keyframes land{0%{transform:translateY(-45%) scale(1.2);opacity:0}55%{transform:translateY(0) scale(1.08,.86);opacity:1}100%{transform:none}}
+
+/* linha/coluna completa: brilha e gira sumindo, em onda */
+.fx-clear::after{animation:clear .42s ease-in}
+@keyframes clear{0%{transform:none}25%{transform:scale(1.14);filter:brightness(2.4)}100%{transform:scale(0) rotate(45deg);opacity:0;filter:brightness(2.4)}}
+
+/* explosivo: treme, esquenta e estoura */
+.fx-explode::after{animation:explode .6s linear}
+@keyframes explode{
+ 0%{transform:none}
+ 10%{transform:translate(-9%,4%)}20%{transform:translate(9%,-4%)}30%{transform:translate(-7%,-5%)}
+ 40%{transform:translate(7%,5%);background:#ffb13b;box-shadow:0 0 12px 3px #ff6a2b}
+ 55%{transform:scale(1.35) rotate(var(--rot,0deg));background:#fff3a0;box-shadow:0 0 18px 7px #ff8a2b;opacity:1}
+ 100%{transform:scale(.1) rotate(calc(var(--rot,0deg) * 3));background:#ff4b2b;opacity:0}}
+
+/* derrete: vira gelo, escorre para baixo e pinga */
+.fx-melt::after{transform-origin:50% 0;animation:melt .75s ease-in}
+@keyframes melt{
+ 0%{transform:none}
+ 25%{background:#a8f1ff;box-shadow:0 0 10px #54dfff}
+ 60%{transform:scale(1.08,1.35);border-radius:30% 30% 50% 50%/20% 20% 80% 80%;background:#4bc7ef}
+ 100%{transform:translateY(70%) scale(.6,1.6);border-radius:50%/30% 30% 70% 70%;background:#2689d1;opacity:0}}
+
+/* areia: blocos esfarelam e se assentam */
+.fx-sandify::after{animation:sandify .45s ease-out}
+:root{--ruby:radial-gradient(circle at 30% 24%,#fff 0 3%,#fff0 10%),radial-gradient(circle at 68% 72%,#ffffffa0 0 2%,#fff0 7%),linear-gradient(135deg,#ff9cb0,#e8174a 45%,#a1052c) center/46% 46% no-repeat,conic-gradient(from -45deg,#ff5574 0 12.5%,#e8123f 0 25%,#b3062d 0 37.5%,#7c001b 0 50%,#5a0012 0 62.5%,#8f0222 0 75%,#d40c3a 0 87.5%,#ff7d96 0);
+ --cut:polygon(20% 0,80% 0,100% 20%,100% 80%,80% 100%,20% 100%,0 80%,0 20%)}
+/* modo rubi: liga com um combo triplo (3+ linhas de uma vez) e vale até o fim da partida */
+body.gems{background:#FCFCDA}body.gems .hint{color:#3a2a1a}body.gems #message{color:#b3062d;font-weight:700}
+body.gems .cell.filled:not(.sand)::after{background:var(--ruby);border-radius:0;clip-path:var(--cut);box-shadow:none}
+body.gems .cell.filled:not(.sand){filter:drop-shadow(0 0 5px #ff1f4d90)}
+body.gems .mini i:not(.empty){background:var(--ruby);border-radius:0;clip-path:var(--cut);box-shadow:none}
+.fx-gem::after{animation:gem .6s ease-out var(--d,0ms) both}
+@keyframes gem{0%{transform:scale(.6) rotate(-20deg);filter:brightness(2.6)}60%{transform:scale(1.12) rotate(4deg);filter:brightness(1.5)}100%{transform:none}}
+@keyframes sandify{0%{transform:scale(1.15);filter:brightness(1.8)}35%{transform:scale(.88) rotate(-5deg)}65%{transform:scale(1.04) rotate(3deg)}100%{transform:none}}
+
+/* blocos que mudaram de linha (areia caindo / ímã puxando) deslizam até a nova casa */
+.fx-fall::after{animation:fall .45s cubic-bezier(.45,0,.55,1.3)}
+@keyframes fall{from{transform:translateY(calc(var(--fy,0) * (100% + var(--gap))))}to{transform:none}}
+
+/* ímã: blocos vibram com contorno vermelho/azul antes de serem puxados */
+.fx-magnet::after{animation:magnet .5s ease-in-out}
+@keyframes magnet{0%,100%{transform:none}
+ 20%{transform:translateY(-6%);box-shadow:0 0 0 2px #ff5c76,0 0 10px #ff5c76}
+ 50%{transform:translateY(-14%);box-shadow:0 0 0 2px #65dfff,0 0 12px #65dfff}
+ 80%{transform:translateY(-6%);box-shadow:0 0 0 2px #ff5c76,0 0 10px #ff5c76}}
+
+/* limpa tudo: onda diagonal, cada bloco fica branco e gira até sumir */
+.fx-wipe::after{animation:wipe .5s ease-in}
+@keyframes wipe{30%{background:#fff;transform:scale(1.1);box-shadow:0 0 12px #8ef0ff}100%{transform:scale(0) rotate(180deg);background:#8ef0ff;opacity:0}}
+
+/* fim de jogo: blocos apagam em onda */
+.fx-dead::after{animation:dead .5s ease-out}
+@keyframes dead{to{filter:grayscale(1) brightness(.5);transform:scale(.88)}}
+
+/* peças novas na bandeja: blocos brotam um a um */
+.piece.new .mini i:not(.empty){animation:spawn .3s cubic-bezier(.3,1.6,.5,1) var(--d,0ms) both}
+@keyframes spawn{from{transform:scale(0)}to{transform:none}}
+
+@media (prefers-reduced-motion:reduce){.cell[class*="fx-"]::after,.piece.new .mini i,.logo i{animation-duration:1ms!important;animation-delay:0ms!important}}

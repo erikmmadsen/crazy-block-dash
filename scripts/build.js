@@ -9,17 +9,15 @@ const root = path.join(__dirname, '..');
 const r = (...p) => path.join(root, ...p);
 const { version } = require(r('package.json'));
 
-let html = fs.readFileSync(r('BlockBlastMaluco_v2.html'), 'utf8');
-const marca = /(<span id="ver">)v[^<]*(<\/span>)/;
-if (!marca.test(html)) throw new Error('Não achei <span id="ver"> no HTML para escrever a versão.');
-html = html.replace(marca, `$1v${version}$2`);
+// copia todo o src/ (index.html, css/, js/, sounds/, images/) para www/
+fs.rmSync(r('www'), { recursive: true, force: true });
+fs.cpSync(r('src'), r('www'), { recursive: true });
 
-fs.mkdirSync(r('www'), { recursive: true });
+let html = fs.readFileSync(r('www', 'index.html'), 'utf8');
+const marca = /(<span id="ver">)v[^<]*(<\/span>)/;
+if (!marca.test(html)) throw new Error('Não achei <span id="ver"> no src/index.html para escrever a versão.');
+html = html.replace(marca, `$1v${version}$2`);
 fs.writeFileSync(r('www', 'index.html'), html);
-for (const pasta of ['sounds', 'images']) {
-  fs.rmSync(r('www', pasta), { recursive: true, force: true });
-  fs.cpSync(r(pasta), r('www', pasta), { recursive: true });
-}
 console.log(`www/ pronto (v${version})`);
 
 if (process.argv.includes('--site')) {

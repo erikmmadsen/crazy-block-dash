@@ -1,0 +1,53 @@
+/* Crazy Block Dash: telas (menu, pausa, fim de jogo, como jogar, idiomas, fases, placar) */
+/* ===== TELAS DO MENU ===== */
+.screen{position:fixed;inset:0;z-index:50;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;overflow-y:auto;
+ padding:calc(max(env(safe-area-inset-top),var(--safe-area-inset-top,0px)) + 24px) 20px calc(max(env(safe-area-inset-bottom),var(--safe-area-inset-bottom,0px)) + 24px)}
+.screen.show{display:flex}
+.screen.solid{background:radial-gradient(circle at top,#283064,#101329 60%),#101329}
+.screen.dim{background:#0b0e22e0;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.card{width:min(100%,380px);background:var(--panel);border:1px solid #394477;border-radius:20px;padding:22px 18px;box-shadow:0 10px 40px #0008}
+.card.wide{width:min(100%,460px)}
+.card h2{margin:0 0 16px;font-size:24px;letter-spacing:1px;color:#8ef0ff}
+.stack{display:flex;flex-direction:column;gap:10px;width:min(100%,320px);margin:0 auto}
+.btn{width:100%;padding:14px 18px;font-size:17px;font-weight:700;border-radius:14px;background:#262c55;border:1px solid var(--line);color:var(--text)}
+.btn.primary{background:linear-gradient(180deg,#7ceaff,#3b9cff);color:#08112b;border:0;box-shadow:0 4px 0 #1f5fb0,0 0 18px #35cfff55;font-size:20px;padding:16px}
+.btn:active{transform:translateY(2px)}.btn.primary:active{box-shadow:0 2px 0 #1f5fb0}
+.btn.small{font-size:14px;padding:11px 6px}.btn.off{opacity:.5}
+.btn.link{background:none;border:0;opacity:.75;font-size:15px}
+.toggles{display:flex;gap:10px}
+.btn.rank{background:linear-gradient(180deg,#c9a7ff,#8b5cf6);color:#1a0b3a;border:0;box-shadow:0 4px 0 #5b2fb8}
+.rankicon{font-size:64px;margin:-6px 0 6px;animation:lvPulse 1.6s ease-in-out infinite}
+#rank .record{display:inline-block;margin:4px 0 14px}
+.btn.levels{background:linear-gradient(180deg,#ffd66b,#ff9f2b);color:#3a2000;border:0;box-shadow:0 4px 0 #b35f00}
+#goalBar{position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;justify-content:space-between;background:var(--panel);border:1px solid #394477;border-radius:12px;padding:8px 12px;font-weight:800;font-size:15px}
+#goalBar[hidden]{display:none}
+#goalBar .gfill{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,#3b9cff55,#64f59b77);transition:width .5s cubic-bezier(.3,1.4,.5,1)}
+#goalBar span{position:relative}#goalMoves{color:#ffd66b}#goalMoves.low{color:#ff6b6b;animation:bump .6s infinite}
+.lvgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-bottom:14px}
+.lv{aspect-ratio:1;border-radius:14px;border:0;background:linear-gradient(180deg,#7ceaff,#3b9cff);color:#08112b;font:900 22px/1 system-ui,Arial;box-shadow:0 4px 0 #1f5fb0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:0}
+.lv small{font-size:10px;letter-spacing:-1px;color:#ffb400;text-shadow:0 1px 0 #0006}
+.lv.done{background:linear-gradient(180deg,#9dffa8,#2fcf6a);box-shadow:0 4px 0 #1d7a2c}
+.lv.lock{background:#262c55;color:#56608f;box-shadow:none;font-size:18px}
+.lv.cur{outline:3px solid #ffe066;outline-offset:2px;animation:lvPulse 1.2s ease-in-out infinite}@keyframes lvPulse{50%{transform:scale(1.07)}}
+.stars{font-size:44px;letter-spacing:6px;margin:-4px 0 6px}
+.stars i{font-style:normal;display:inline-block;filter:grayscale(1) brightness(.5)}
+.stars i.on{filter:drop-shadow(0 0 10px #ffb400);animation:starIn .5s cubic-bezier(.3,1.8,.5,1) both}
+@keyframes starIn{0%{transform:scale(0) rotate(-90deg)}100%{transform:none}}
+.lvwhy{margin:0 0 12px;font-weight:700;color:#c9d2ff}
+.stat small,.final small{font-size:inherit;display:block}
+#langList .btn{display:flex;align-items:center;gap:12px;text-align:left}#langList .btn .flag{font-size:22px}#langList .btn .ok{margin-left:auto;color:#64f59b;font-size:20px}#langList .btn.sel{border-color:#73e0ff;box-shadow:0 0 0 2px #73e0ff55}#langBack{margin-top:10px}
+#menu h1{margin:6px 0 0;font-size:clamp(34px,11vw,52px);line-height:1;color:#8ef0ff;text-shadow:0 0 18px #35cfff;letter-spacing:1px}
+.logo{display:grid;grid-template-columns:repeat(7,clamp(22px,7vw,30px));grid-auto-rows:clamp(22px,7vw,30px);gap:4px}
+.logo i{border-radius:6px;background:var(--tex),var(--c);box-shadow:var(--bevel),0 0 8px color-mix(in srgb,var(--c) 45%,transparent);animation:land .34s cubic-bezier(.3,1.4,.5,1) var(--d,0ms) both}
+.logo i.e{visibility:hidden}
+.record{background:var(--panel);border:1px solid #394477;border-radius:999px;padding:8px 18px;font-weight:700}.record b{color:#ffd66b}
+.ver{font-size:11px;opacity:.4}
+.final{display:flex;gap:10px;margin:0 0 16px}
+.final div{flex:1;background:#262c55;border-radius:14px;padding:10px;font-weight:700;font-size:13px}.final b{display:block;font-size:30px;color:#8ef0ff}
+.newrec{margin:-6px 0 14px;font-weight:800;color:#ffd66b;text-shadow:0 0 12px #ffb13b88}
+.rules{text-align:left;margin:0 0 14px;padding-left:20px;line-height:1.45;font-size:15px}.rules li{margin:4px 0}
+.card h3{margin:4px 0 8px;font-size:16px;text-align:left}
+.specials{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.specials div{display:flex;gap:10px;align-items:center;text-align:left;background:#262c55;border-radius:12px;padding:8px 10px;font-size:14px}
+.specials span{font-size:24px;flex:0 0 30px;text-align:center}
+.specials p{margin:0}

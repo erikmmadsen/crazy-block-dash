@@ -7,6 +7,16 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e 
 - **MINOR** (1.1.0): novidade (modo novo, peça nova, tela nova)
 - **PATCH** (1.0.1): correção ou ajuste pequeno (texto, som, cor, bug)
 
+## [1.0.1] - 2026-11-22
+
+### Alterado
+- Projeto reorganizado: o jogo agora fica em `src/`, com o código separado em `css/` (3 arquivos) e `js/` (11 arquivos, um por assunto)
+- `src/sounds/` só com os sons em uso; as versões alternativas foram para `recursos/sons-alternativos/`
+- Som da bomba renomeado para `bomba.mp4` (sem espaços)
+- Imagens da loja em `play-store/imagens/` e guias em `docs/`
+- Release automática em workflow próprio (`release.yml`), disparada quando a versão muda
+- Verificação do CI agora acusa sons e imagens que sobram sem uso
+
 ## [1.0.0] - 2026-11-22
 
 Primeira versão com esteira de CI/CD.
